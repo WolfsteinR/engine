@@ -13,7 +13,7 @@ use page\Page;
 
 class Route
 {
-    private $routers = array(0=>'/',1=>'example',3=>'error');
+    private $routers = array(0=>'/',1=>'example',2=>'error');
 
     public function __construct()
     {
@@ -21,13 +21,21 @@ class Route
     }
 
 
-
-    public function get($path) {
+    public function get($path)
+    {
+        require_once 'page/pages.php';
         if(array_search($path, $this->routers) === false) {
             $path = 'error';
         }
+
         $page = new Page();
         return $page->createPage($path);
-        //return $routers;
+    }
+
+    public function add($path)
+    {
+        $num = count($this->routers) + 1;
+        $this->routers[$num] = $path;
+        return $this->routers;
     }
 }
